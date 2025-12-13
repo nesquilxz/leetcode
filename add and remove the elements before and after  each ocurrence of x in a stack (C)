@@ -1,0 +1,56 @@
+//add and remove the elements before and after  each ocurrence of x in a stack (C)
+
+// ---------- Q2 corrigida (agora de fato...) -------
+
+TP *retira_antes_depois(TP *p, int x) {
+    TP *temp = TP_inicializa();
+    TP *resp = TP_inicializa();
+    
+    if (TP_vazia(p)) {
+        return resp;
+    }
+    
+    int elem_previo = INT_MIN;
+    int elem_corrente;
+    int terminou = 0;
+    
+    while (!terminou) {
+        elem_corrente = TP_pop(p);
+        TP_push(temp, elem_corrente);
+        
+        if (elem_corrente != x) {
+            if (elem_previo != INT_MIN) {
+                TP_push(resp, elem_previo);
+            }
+        } else {
+            if (!TP_vazia(p)) {
+                int elem_seguinte = TP_pop(p);
+                TP_push(temp, elem_seguinte);
+            }
+        }
+        
+        elem_previo = elem_corrente;
+        
+        if (TP_vazia(p)) {
+            TP_push(resp, elem_corrente);
+            terminou = 1;
+        }
+    }
+    
+    while (TP_vazia(temp) == 0) {
+        int elem_restaurado = TP_pop(temp);
+        TP_push(p, elem_restaurado);
+    }
+    
+    TP *saida_final = TP_inicializa();
+    
+    while (TP_vazia(resp) == 0) {
+        int elem_transferido = TP_pop(resp);
+        TP_push(saida_final, elem_transferido);
+    }
+    
+    TP_libera(resp);
+    
+    return saida_final;
+}
+
