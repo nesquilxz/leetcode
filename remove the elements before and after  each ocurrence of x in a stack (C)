@@ -1,56 +1,49 @@
-//add and remove the elements before and after  each ocurrence of x in a stack (C)
+TP *retira_antes_depois_x(TP *p, int(x)) {
 
-// ---------- Q2 corrigida (agora de fato...) -------
+    TP *aux = TP_inicializa() //reestruturar a pilha original.
+    TP *resp = TP_inicializa()
+    int q = INT_MIN, r; //x é como se fosse o topo, por isso o int min
 
-TP *retira_antes_depois(TP *p, int x) {
-    TP *temp = TP_inicializa();
-    TP *resp = TP_inicializa();
-    
-    if (TP_vazia(p)) {
-        return resp;
-    }
-    
-    int elem_previo = INT_MIN;
-    int elem_corrente;
-    int terminou = 0;
-    
-    while (!terminou) {
-        elem_corrente = TP_pop(p);
-        TP_push(temp, elem_corrente);
-        
-        if (elem_corrente != x) {
-            if (elem_previo != INT_MIN) {
-                TP_push(resp, elem_previo);
-            }
-        } else {
-            if (!TP_vazia(p)) {
-                int elem_seguinte = TP_pop(p);
-                TP_push(temp, elem_seguinte);
+    while (1)
+    {
+        r = TP_pop(p);
+        TP_push(aux, r);
+        if(r != x) {
+            if (q != INT_MIN) { //anterior é intmin? (aqui verifica se x está no topo, porque se estiver, nao podemos colocar o vazio como resposta.)
+                TP_push(resp, r);
             }
         }
-        
-        elem_previo = elem_corrente;
-        
-        if (TP_vazia(p)) {
-            TP_push(resp, elem_corrente);
-            terminou = 1;
+
+        else if(!TP_vazia(p)) {
+            int z = TP_pop(p);
+            TP_push(aux, z);
         }
+
+        q = r;
+        if(TP_vazia(p)) {
+            TP_push(resp, q);
+            break;
+        }
+
+    
+
     }
     
-    while (TP_vazia(temp) == 0) {
-        int elem_restaurado = TP_pop(temp);
-        TP_push(p, elem_restaurado);
+
+    while(!TP_vazia(aux)) {
+        int y = TP_pop(aux);
+        TP_push(p, y);
     }
-    
-    TP *saida_final = TP_inicializa();
-    
-    while (TP_vazia(resp) == 0) {
-        int elem_transferido = TP_pop(resp);
-        TP_push(saida_final, elem_transferido);
+
+    while(!TP_vazia(resp)) {
+        int y = TP_pop(resp);
+        TP_push(aux,y);
     }
-    
-    TP_libera(resp);
-    
-    return saida_final;
+
+    TP_retira(resp);
+    return aux;
+
+
+
+
 }
-
