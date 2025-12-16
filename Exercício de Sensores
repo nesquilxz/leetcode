@@ -1,0 +1,205 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+typedef struct sensor{
+    int id;                  // identificador unico do sensor
+    char data_inicio[11];    // data de inicio em dd/mm/yyyy
+    float alcance;           // raio de alcance
+    int ativo;               // 1 para sensor ativo, 0 caso contrario
+}TSensor;
+
+typedef struct tls {
+    TSensor* info;
+    struct tls *prox;
+}TLS;
+
+//3,5 PONTOS
+//Retirada baseada em ordenação dos dados:
+//- só remove inativos
+//- mais de k inativos, segue a ordem:
+//- primeiro: mais velhos
+//- segundo: menor alcance primeiro
+//- terceiro: menor id primeiro
+
+TLS *remover(TLS* l, int k);
+
+TSensor *aloca(int id, char *data, float alc, int at){
+  TSensor* novo = (TSensor *) malloc(sizeof(TSensor));
+  novo->id = id;
+  strcpy(novo->data_inicio, data);
+  novo->alcance = alc;
+  novo->ativo = at;
+  return novo;
+}
+
+TLS* TLS_insere(TLS *l, TSensor *s){
+  TLS *novo = (TLS *) malloc(sizeof(TLS));
+  novo->prox = l;
+  novo->info = s;
+  return novo;
+}
+
+void TLS_libera(TLS *l){
+  TLS *p = l, *q;
+  while(p){
+    q = p;
+    p = p->prox;
+    free(q->info);
+    free(q);
+  } 
+}
+
+void TLS_imprime(TLS *l){
+  TLS *p = l;
+  while(p){
+    printf("%d (%d):%s - %f\n", p->info->id, p->info->ativo, p->info->data_inicio, p->info->alcance);
+    p = p->prox;
+  } 
+}
+
+int main(void){
+  int id;
+  char data[11];
+  float alcance;
+  int ativo;
+  int k;
+  printf("Digite os sensores na seguinte ordem: id ativo alcance data. Se for fornecido um id menor ou igual a zero, a inserção é interrompida.\n");
+  TLS *l = NULL;
+  while(1){
+    scanf("%d", &id);
+    if(id <= 0) break;
+    scanf("%d%f%s", &ativo, &alcance, data);
+    l = TLS_insere(l, aloca(id, data, alcance, ativo));
+  }
+  TLS_imprime(l);
+  printf("Digite k... ");
+  scanf("%d", &k);
+  l = remover(l, k);  
+  TLS_imprime(l);
+  TLS_libera(l);
+  return 0;
+}
+
+
+
+
+
+//----------- início da q3 (corrigida!) --------------
+
+
+int cmp(const void *a, const void *b) {
+    TLS *t1 = *(TLS **)a;  
+    TLS *t2 = *(TLS **)b;
+
+    TSensor *s1 = t1->info; 
+    TSensor *s2 = t2->info;
+
+
+    int d1, m1, y1;
+    int d2, m2, y2;
+
+    //correção 1: ativo deve ser checado antes das datas!
+    if (s1->ativo != s2->ativo) {
+        return s1->ativo - s2->ativo;
+    }
+
+    sscanf(s1->data_inicio, "%d/%d/%d", &d1, &m1, &y1);
+    sscanf(s2->data_inicio, "%d/%d/%d", &d2, &m2, &y2);
+
+    if (y1 != y2) return y1 - y2;
+    if (m1 != m2) return m1 - m2;
+    if (d1 != d2) return d1 - d2;
+
+    if (s1->alcance != s2->alcance)
+        return s1->alcance - s2->alcance;
+
+    return s1->id - s2->id;
+}
+
+
+TLS *remover(TLS *ls, int k) {
+
+    if (!ls || k <= 0) return ls;
+
+    int n = 0;
+    TLS *aux = ls;
+
+    while (aux) {
+        n++;
+        aux = aux->prox;
+    }
+
+    // correção 2: se k >= n, remover apenas os inativos. corrigido!
+    if (k >= n) {
+
+        TLS *prev = NULL;
+        aux = ls;
+
+        while (aux) {
+            TLS *next = aux->prox;
+
+            if (aux->info->ativo == 0) {  
+                if (prev) prev->prox = next;
+                else ls = next;
+
+                free(aux->info);
+                free(aux);
+            }
+            else {
+                prev = aux;
+            }
+
+            aux = next;
+        }
+
+        return ls;
+    }
+
+
+
+    TLS **vet = malloc((n * sizeof(TLS*)));
+    aux = ls;
+
+    for (int i = 0; i < n; i++) {
+        vet[i] = aux;
+        aux = aux->prox;
+    }
+
+    qsort(vet, n, sizeof(TLS*), cmp);
+
+    int ninativo = 0;
+    for (int i = 0; i < n; i++) {
+        if (vet[i]->info->ativo == 0) ninativo++;
+    }
+
+    if (k > ninativo) k = ninativo;
+
+
+    for (int i = 0; i < k; i++) {
+
+        TLS *rem = vet[i];
+
+        if (rem == ls) {
+            ls = ls->prox;
+            free(rem->info);
+            free(rem);
+            continue;
+        }
+
+        TLS *ant = ls;
+
+        while (ant->prox != rem) {
+            ant = ant->prox;
+        }
+
+        ant->prox = rem->prox;
+
+        free(rem->info);
+        free(rem);
+    }
+
+    free(vet);
+    return ls;
+}
+
