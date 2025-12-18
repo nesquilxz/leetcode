@@ -1,0 +1,24 @@
+//Tipos primitivos x Tipos Compostos em RUST
+//Tipos primitivos: representam apenas um valor numa escala conhecida, enquanto
+//compostos conseguem representar mais de um valor de escalas conhecidas(diferentes ou não)
+//Com tuplas, voce consegue alterar o valor botando simplesmente um let mut e acessando o index de cada elemento depois...
+
+fn main() {
+    //tupla
+    let tupla = (1, 2, 3);
+    
+    let (a, _b, _c) = tupla; //me chamou muita atenção. podemos fazer um tipo de "processo inverso" e chamar certos elementos conforme queremos.
+    //voce precisa deixar claro que não é utilizado, colocando um underscore na varivael
+  
+    println!("{:?}", a);
+    println!("{:?}", tupla.0); //sistema de index funciona com pontos. interessante.
+    
+    
+    //array
+    
+    let numbers = [1.1, 2.0, 3.0]; //só aceita elementos iguais
+     println!("{:?}", numbers[0]); //indice por colchetes. algo mais tipo C ou Python
+     //slicing
+      println!("{:?}", &numbers[0..2]);
+}
+
