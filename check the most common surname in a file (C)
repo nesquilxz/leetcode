@@ -1,0 +1,72 @@
+//ver quantas pessoas tem o sobrenome em comum(e qual aparece mais vezes).
+
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
+
+#define MAX 100
+
+int main(void) {
+
+    FILE *arq = fopen("nomes.txt", "r");
+    if(!arq) {
+        printf("Não foi possível ler o arquivo!");
+        exit(1);
+    }
+
+    char nome[100];
+    char sobrenomes[MAX][100];
+    int contagem = 0;
+    int apareceu = 0;
+    int apareceumais = 0;
+    char sobrenome_mais_comum[100] = "";
+    int maxcontagem = 0;
+
+
+    while (fscanf(arq, "%s %s", nome, sobrenomes[contagem]) == 2)
+    {
+        contagem++;
+        if(contagem >= MAX) {
+            break;
+        }
+    }
+    
+    for (int i = 0; i < contagem; i++)
+    {
+        printf("%s\n", sobrenomes[i]);
+    }
+    
+    fclose(arq);
+    printf("\nVamos ver qual sobrenome apareceu mais vezes!\n");
+
+
+    
+    for(int i = 0; i < contagem; i++) {
+        int apareceu = 1;
+
+        for (int j = i + 1; j < contagem; j++)
+        {
+            if(strcmp(sobrenomes[i], sobrenomes[j]) == 0) 
+            {
+                apareceu++;
+               
+            }
+                
+        }
+
+            if (apareceu > apareceumais)
+                {
+                    apareceumais = apareceu;
+                    strcpy(sobrenome_mais_comum, sobrenomes[i]);
+                }
+        
+        
+     
+
+    }
+
+    
+    printf("O sobrenome que mais apareceu foi: %s", sobrenome_mais_comum);
+    return 0;
+
+}
