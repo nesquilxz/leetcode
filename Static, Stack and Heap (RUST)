@@ -1,0 +1,17 @@
+static Y: u32 = 13; //armazena o binario do programa, tem tamanho fixo. termina quando o programa termina. Quando o programa inicializa reserva na memoria valores que nao mudam. Ex: proprio codigo do programa, var estaticas e strings literais.
+
+fn main() {
+    let x = 5;
+    let y = true;
+    let z = [1, 2, 3]; //stack, valores ficam em um frame especifico (dinamicos).onde ficam as variaveis locais. stack tem tamanho dinamico, mas podemos ter stack overflow. (Ex: input, mas voce nao sabe quanto o usuario vai colocar. se ultrapassar o limite, vai dar stack overflow.)
+    
+    
+    let users = get_users(); //heap voce nao precisa se preocupar com o tamanho (mas é preciso ter cuidado). tamanho dinamico. para valores muito grandes, ou variaveis além de funções
+}
+
+
+//Resumo:
+
+//algo dinamico, que pode aumentar ou diminuir de tamanho (input de usuario, busca em bibiliotecas...) -> Heap;
+//algo fixo, nao muda -> stack
+//algo que se mantem no programa inteiro, independente de funções: static.
