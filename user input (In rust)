@@ -1,0 +1,14 @@
+use std::io; // #include <stdio.h> em C...
+
+fn main() {
+    
+    let mut string = String::new(); //string ta na heap. é dinâmica.
+    println!("Digite um texto: ");
+    
+    io::stdin().read_line(&mut string).expect("Error reading console");
+    // usamos & pq estamos passando uma ref mut
+    println!("Você digitou: {string}");
+    
+    let a = String::from("Pedro ama sua namorada.");
+    println!("{a}");
+}
