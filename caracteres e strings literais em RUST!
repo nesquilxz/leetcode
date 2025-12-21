@@ -6,7 +6,7 @@ fn main() {
     let l3 = 'r';
     let l4 = 'o';
     println!("{l0}{l1}{l2}{l3}{l4}"); 
-    //perceba como tem diferença ao printar caracteres e em pritar elementos de uma array/tupla, que são printadas {:?} desta forma, dps especificamos qual variavel é.
+    //perceba como tem diferença ao printar caracteres e em pritar elementos de uma array/tupla, que são printadas assim: {:?}
     
     //podemos representar nome por array de caracteres
     
