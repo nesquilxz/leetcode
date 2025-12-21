@@ -1,0 +1,34 @@
+fn main() {
+    //aspas simples é caracter
+    let l0 = 'p';
+    let l1 = 'e';
+    let l2 = 'd';
+    let l3 = 'r';
+    let l4 = 'o';
+    println!("{l0}{l1}{l2}{l3}{l4}"); 
+    //perceba como tem diferença ao printar caracteres e em pritar elementos de uma array/tupla, que são printadas {:?} desta forma, dps especificamos qual variavel é.
+    
+    //podemos representar nome por array de caracteres
+    
+    let nome = ['p', 'e', 'd', 'r', 'o', ' ', 'l', 'i','n','d','o'];
+    
+    println!("{:?}", &nome[0..5]);
+    
+    for i in 0..5{
+        println!("{:?}", nome[i]);
+    }
+    
+    
+    
+    //agora, vamos trabalhar com strings
+    
+    
+    let nome: &str = "Pedro";
+    //&str = str slice (ref ao endereço, visto que str nao tem tamanho fixo)
+//praticamente, é tipo um pointer do C. ref para o local onde o texto começa
+    
+    
+    
+    
+    
+}
