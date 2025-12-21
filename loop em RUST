@@ -1,0 +1,19 @@
+//finalizando por hj, vou aprender loops em rust
+
+fn main() {
+    
+    //while.
+    
+    let mut i = 0;
+    
+    while i < 5 {
+        println!("Estou repetindo esta mensagem 5 vezes. A nossa contagem está em: {}", i);
+        i += 1;
+    }
+    
+  
+    for j in 1..=3 {
+        println!("Agora, estou repetindo esta mensagem {} vez(es): Eu vou conseguir aprender RUST.", j)
+    }
+    
+}
