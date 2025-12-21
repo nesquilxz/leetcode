@@ -1,0 +1,43 @@
+fn main() {
+    //quando nao sabemos o tamanho de texto que vamos trabalhar, utilizamos:
+    // ------ strings dinamicas (Strings) -------
+    
+    
+    
+    //temos 4 jeitos principais de ter uma String:
+    
+    
+    //Primeiro jeito:
+    
+    let mut s = String::new(); //:: serve para chamar método (aqui foi o new);
+    s.push('p');
+    s.push('e');
+    s.push('d');
+    s.push('r');
+    s.push('o');
+    
+    println!("{s\n}");
+    
+    
+     //Segundo jeito:
+    
+    let mut p = String::new();
+    p.push_str("Pedro está aprendendo RUST!");
+    println!("{p}");
+    
+    
+    
+     //Terceiro jeito:
+     
+     let string = "Pedro é o melhor!".to_string();
+     println!("{string}");
+     
+     
+     
+     
+     
+     let nova = String::from("Pedro está se tornando um novo Torvalds!");
+     println!("{nova}");
+    
+    
+}
