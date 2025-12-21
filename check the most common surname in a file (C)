@@ -57,7 +57,7 @@ int main(void) {
             if (apareceu > apareceumais)
                 {
                     apareceumais = apareceu;
-                    strcpy(sobrenome_mais_comum, sobrenomes[i]);
+                    strcpy(sobrenome_mais_comum, sobrenomes[i]); // como arrays em C não podem ser atribuídos com "=", nós utilizamos strcpy. isto é importante demais!!
                 }
         
         
