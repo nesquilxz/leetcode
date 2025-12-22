@@ -1,0 +1,66 @@
+//Hoje, aprendi módulos e funções em RUST. Achei interessante a questão de você ter tipo uma bibliteca para organizar funções (que por sinal, tem as públicas e privadas).
+
+mod matematica {
+    use std::io;
+    
+    pub fn soma3(a:i32) -> i32 {
+        a + 3
+    }
+    
+     pub fn mult3(b:i32) -> i32 {
+        b * 3
+    }
+    
+    pub fn stringparanumero() -> i32 {
+        let mut string = String::new();
+        io::stdin().read_line(&mut string).expect("Error reading console");
+        let x: i32 = string.trim().parse().unwrap();
+        x
+        
+    }
+    
+    
+}
+
+
+
+fn main() {
+    
+   
+    let array = [1, 3, 5, 6, 9];
+    
+    println!("Digite um número: ");
+    let mut x: i32 = matematica::stringparanumero();
+    
+    
+    let mut encontrado = false;
+    
+    for i in 0..array.len() {
+        if array[i] == x {
+            encontrado = true;
+            break;
+        }
+    }
+    
+    if encontrado {
+         println!("Está na array!");
+    }
+    
+    else {
+         println!("Não está na array!");
+    }
+   
+    
+    println!("O seu número + 3 é: ");
+    x = matematica::soma3(x);
+    println!("{}", x);
+    
+    x -= 3;
+    
+    println!("O seu número * 3 é: ");
+    x = matematica::mult3(x);
+    println!("{}", x);
+    
+    
+    
+}
