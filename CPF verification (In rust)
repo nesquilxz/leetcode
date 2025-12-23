@@ -28,7 +28,7 @@ fn main() {
     let mut total: u32 = 0;
     let mut peso: u32 = 10;
     
-    // Pega cada dígito pelo índice da string (similar ao seu raciocínio com números)
+    // Pega cada dígito pelo índice da string 
     // ex: 18268441312
     for i in 0..9 {
         let digito_char = cpf_limpo.chars().nth(i).unwrap();
