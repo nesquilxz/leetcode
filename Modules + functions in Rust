@@ -11,7 +11,7 @@ mod matematica {
     
     pub fn stringparanumero() -> i32 {
         let mut string = String::new();
-        io::stdin().read_line(&mut string).expect("Error reading console");
+        io::stdin().read_line(&mut string).expect("Error reading console"); // usamos &mut nome porque nome vai servir de empréstimo mútavel (Vou escrever um código falando sobre ownership)
         let x: i32 = string.trim().parse().unwrap();
         x
         
