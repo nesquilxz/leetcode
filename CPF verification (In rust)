@@ -1,0 +1,90 @@
+//exercicio: verificar se um CPF é válido, utilizando módulo c/ funções para isto.
+
+mod verificacao {
+    
+    pub fn cpf() -> [u8; 11] {
+        use std::io;
+        println!("Digite o seu cpf: ");
+        let mut s = String::new();
+        io::stdin().read_line(&mut s).expect("Error reading console");
+        
+        let mut digitos = [0u8; 11];
+        let mut pos = 0;
+        
+        // extrai apenas dígitos numéricos para array fixo
+        for c in s.chars() {
+            if c.is_digit(10) && pos < 11 {
+                digitos[pos] = c.to_digit(10).unwrap() as u8;
+                pos += 1;
+            }
+        }
+        
+        digitos
+    }
+}
+
+fn main() {
+    
+    let digitos = verificacao::cpf(); //usando array de 11 u8 em vez de u64 para manter zeros à esquerda
+    
+    // verifica se temos 11 dígitos válidos
+    let mut tem_11_digitos = true;
+    for i in 0..11 {
+        if digitos[i] > 9 { // dígito inválido (não foi preenchido)
+            tem_11_digitos = false;
+            break;
+        }
+    }
+    
+    if !tem_11_digitos {
+        println!("cpf inválido. (tamanho)");
+        return;
+    }
+    
+    // ========= CALCULO DO V1 =========
+    
+    let mut total: u32 = 0;
+    let mut peso: u32 = 10;
+    
+    //ex: 18268441312
+    for i in 0..9 {
+        let digito = digitos[i] as u32;
+        total += digito * peso;
+        peso -= 1;
+    }
+    
+    let v1 = digitos[9] as u32;
+    
+    if (total % 11) < 2 && v1 != 0 {
+        println!("cpf não é válido.");
+        return;
+    }
+    
+    if (total % 11) >= 2 && v1 != 11 - (total % 11) {
+        println!("cpf não é válido.");
+        return;
+    }
+    
+    // ========= CALCULO DO V2 =========
+    
+    total = 0;
+    peso = 11;
+    
+    for i in 0..10 {
+        let digito = digitos[i] as u32;
+        total += digito * peso;
+        peso -= 1;
+    }
+    
+    let v2 = digitos[10] as u32;
+    
+    if (total % 11) < 2 && v2 != 0 {
+        println!("cpf não é válido.");
+    }
+    else if (total % 11) >= 2 && v2 != 11 - (total % 11) {
+        println!("cpf não é válido.");
+    }
+    else {
+        println!("cpf é válido!");
+    }
+}
