@@ -3,7 +3,7 @@ print("="*30)
 print("{:^30}".format("BANCO XXX"))
 print("="*30)
 
-valor = int(input("Digite o valor que você deseja sacar: "))
+valor = int(input("Digite o valor que você deseja sacar: ")) //inteiro é declarado antes do input
 notas = [200, 100, 50, 20, 10, 5, 2, 1]
 
 for nota in notas:
