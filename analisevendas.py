@@ -19,7 +19,7 @@ print(df)
 faturamento_total = df["faturamento"].sum()
 print("\nFaturamento total:", faturamento_total)
 
-# faturamento por produto
+# faturamento por produto usando groupby
 faturamento_por_produto = df.groupby("produto")["faturamento"].sum()
 
 print("\nFaturamento por produto:")
