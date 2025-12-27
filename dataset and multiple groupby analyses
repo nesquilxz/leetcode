@@ -1,0 +1,37 @@
+import pandas as pd
+
+dados = {
+    "pedido_id": [1, 2, 3, 4, 5, 6, 7, 8],
+    "cliente": ["Ana", "Ana", "Bruno", "Bruno", "Carlos", "Carlos", "Ana", "Bruno"],
+    "regiao": ["Sul", "Sul", "Sudeste", "Sudeste", "Sul", "Sul", "Sul", "Sudeste"],
+    "categoria": ["Eletrônicos", "Livros", "Livros", "Eletrônicos", "Livros", "Eletrônicos", "Eletrônicos", "Livros"],
+    "valor": [1200, 80, 45, 900, 60, 1100, 1300, 50]
+}
+
+df = pd.DataFrame(dados)
+
+# 1. faturamento total por região
+faturamento_regiao = df.groupby("regiao")["valor"].sum()
+
+# 2. ticket médio por cliente
+ticket_medio_cliente = df.groupby("cliente")["valor"].mean()
+
+# 3. faturamento por região e categoria
+faturamento_regiao_categoria = df.groupby(
+    ["regiao", "categoria"]
+)["valor"].sum()
+
+# 4. quantidade de pedidos por cliente
+qtd_pedidos_cliente = df.groupby("cliente")["pedido_id"].count()
+
+print("Faturamento por região:")
+print(faturamento_regiao)
+
+print("\nTicket médio por cliente:")
+print(ticket_medio_cliente)
+
+print("\nFaturamento por região e categoria:")
+print(faturamento_regiao_categoria)
+
+print("\nQuantidade de pedidos por cliente:")
+print(qtd_pedidos_cliente)
