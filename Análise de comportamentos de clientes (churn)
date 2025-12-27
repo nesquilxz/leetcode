@@ -1,0 +1,23 @@
+import pandas as pd
+
+# criando um "dataset fake"
+dados = {
+    "cliente": ["Ana", "Bruno", "Carlos", "Diana", "Eduardo"],
+    "meses_ativo": [12, 3, 8, 2, 15],
+    "uso_mensal": [20, 5, 12, 3, 25],
+    "cancelou": [0, 1, 0, 1, 0]  # 1 = cancelou, 0 = ativo
+}
+
+df = pd.DataFrame(dados)
+
+# média de uso mensal por status
+media_uso = df.groupby("cancelou")["uso_mensal"].mean() #clientes que cancelam usam menos o serviço? (mean serve para fazer uma média aritmética)
+
+# taxa de churn
+taxa_churn = df["cancelou"].mean() #ver em % quem cancelou o plano.
+
+print("Média de uso mensal por status:")
+print(media_uso)
+
+print("\nTaxa de churn:")
+print(taxa_churn)
