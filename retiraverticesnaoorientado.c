@@ -127,15 +127,15 @@ Tgrafo *retiraverticenaoorientado (Tgrafo *g, int v) {
     else {
 
         Tgrafo *verticearemover = busca(g,v);
-        Tvizinho *vizinhoatual = verticearemover->prim_vizinho->id_vizinho;
+        Tvizinho *vizinhoatual = verticearemover->prim_vizinho;
         while(vizinhoatual != NULL) {
             retira_aresta(g, verticearemover->id_vertice, vizinhoatual->id_vizinho);
-            vizinhoatual = vizinhoatual->prox;
+            vizinhoatual = verticearemover->prox;
         }
 
         
 
-          Tgrafo* ant = NULL;
+        Tgrafo* ant = NULL;
         Tgrafo* atual = g;
 
 
